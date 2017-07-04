@@ -11,9 +11,22 @@ body {
   padding: 0;
 }
 
+h3 {
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    background-color: #e19295;
+    color: white;
+}
+
+#logo {
+    float: right;
+}
+
 .container {
   height: 100%;
   position: relative;
+  background: #8cb30c;
 }
 
 
@@ -23,6 +36,7 @@ body {
     line-height: 35px;
     text-align: left;
     width: 340px;
+    height: 100%;
 }
 
 .header {
@@ -40,9 +54,10 @@ body {
 }
 
 input {
-  font-size: 12px;
-  padding: 10px;
+    font-size: 12px;
+    padding: 10px;
     border: 0;
+    width: 93%;
 }
 
 input[type="search"] {
@@ -127,6 +142,7 @@ a {
   position: absolute;
   right: 0px;
 }
+
 
 /*Media Queries - Mobile*/
 @media only screen and (max-width: 500px) {

@@ -14,13 +14,13 @@
                   <h1>Dresden</h1>
               </div>
               <div class="content">
-                  <div class="search">
-                      <input type="search" placeholder="Search Park/Cafe/Playground... " data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
-                      <input type="button" value="Filter">
+                   <div class="search">
+                      <input type="text" placeholder="Search Park/Cafe/Playground.." data-bind="value: query, valueUpdate: 'afterkeydown'" >
                   </div>
-                  <ol class="locations" data-bind="foreach: locationList">
+
+                  <ol class="locations" data-bind="foreach: searchResults">
                     <li>
-                        <a href="" data-bind="text: name, click: $parent.switchCat"></a>
+                        <a href="" data-bind="text: name, click: $parent.listClicker"></a>
                     </li>
                   </ol>
               </div>
@@ -29,6 +29,7 @@
         </div>
 
         <script src="js/lib/knockout-3.4.2.js"></script>
+        <script src="js/map.js"></script>
         <script src="js/script.js"></script>
         <!--Load the JS API ASYNCHRONOUSLY below.-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoeth7Fqpz2HH124UjZkfxLSS19YhOT5Y&callback=initMap"
