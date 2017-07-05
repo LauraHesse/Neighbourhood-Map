@@ -2,6 +2,7 @@
 //Knockout JS
 var ViewModel = function(){
   var self = this;
+  //self.query are observables - which are functions - you need to call them without any arguments to get their values.
   self.query = ko.observable('');
 
   self.searchResults = ko.computed(function() {
@@ -16,16 +17,6 @@ var ViewModel = function(){
   self.listClicker = function(locationInfo){
     google.maps.event.trigger(locationInfo.marker, 'click');
   };
-
-  // instagram helper function
-  function instagram(data, callback) {
-
-      // Specify instagram url components
-
-    var CLIENT ID = "4a8e03dd01274aa9bcfa6438d911ed16";
-    var SUPPORT EMAIL = "laura.hesse@t-systems.com";
-    var CLIENT STATUS =	"Sandbox Mode";
-
-    }
 };
+
 ko.applyBindings(new ViewModel());
