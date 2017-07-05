@@ -1,49 +1,56 @@
 var map;
 
-//This is the model
-//This array of objects holds the location info
+
+//locationInfo is an array of objects that holds the info
 var locationInfo = [
   {
       name: 'Frauenkirche / Church',
       latlong: {lat: 51.051873, lng: 13.741522},
-      address: 'The Frauenkirche Dresden looks back on a history of over 1000 years. It ist a history full of changes, of great splendour and utter destruction. The first Frauenkirche was built in the 11th century as small Romanic missionary church.',
+      description: 'The Frauenkirche Dresden looks back on a history of over 1000 years. It ist a history full of changes, of great splendour and utter destruction. The first Frauenkirche was built in the 11th century as small Romanic missionary church.',
+    // id is foursquare.com location id
+      id: '4b5c47a9f964a520782929e3',
       icon: 'images/bell.png'
   },
   {
       name: 'Zwinger / Garden',
       latlong: {lat: 51.053002, lng: 13.733757},
-      address: 'The Zwinger is a palace in the eastern German city of Dresden, built in Baroque style and designed by court architect Matthäus Daniel Pöppelmann. It served as the orangery, exhibition gallery and festival arena of the Dresden Court.',
+      description: 'The Zwinger is a palace in the eastern German city of Dresden, built in Baroque style and designed by court architect Matthäus Daniel Pöppelmann. It served as the orangery, exhibition gallery and festival arena of the Dresden Court.',
+      id: '4b5c4b01f964a520d82929e3',
       icon: 'images/tree.png'
   },
   {
       name: 'Semperoper / Oper',
       latlong: {lat: 51.054486, lng: 13.735276},
-      address: 'The magnificent Semperoper dominates the Theaterplatz on the river Elbe, forming the centrepiece of the historic old city. ',
+      description: 'The magnificent Semperoper dominates the Theaterplatz on the river Elbe, forming the centrepiece of the historic old city. ',
+      id: '4b5c4a07f964a520c32929e3',
       icon: 'images/tenor.png'
   },
   {
       name: 'Gemäldegalerie Alte Meister / Art gallery',
       latlong: {lat: 51.053388, lng: 13.734707},
-      address: '(Old Masters Picture Gallery) With master works including Raphael’s "Sistine Madonna", Giorgione’s "Sleeping Venus", Correggio’s "Holy Night", Cranach’s "St. Catherine Altar", Vermeer’s "Girl Reading a Letter at an Open Window" and Bellotto’s views of Dresden, the Gemäldegalerie Alte Meister enjoys a reputation that is international in scope. ',
+      description: '(Old Masters Picture Gallery) With master works including Raphael’s "Sistine Madonna", Giorgione’s "Sleeping Venus", Correggio’s "Holy Night", Cranach’s "St. Catherine Altar", Vermeer’s "Girl Reading a Letter at an Open Window" and Bellotto’s views of Dresden, the Gemäldegalerie Alte Meister enjoys a reputation that is international in scope. ',
+      id: '4b462b27f964a520d41826e3',
       icon: 'images/palette.png'
   },
   {
       name: 'Brühlsche Terrasse / Garten',
       latlong: {lat: 51.053241, lng: 13.743673},
-      address: 'Dresden Fortress, around  1170  Dresden is supposed to have been founded as a royal  residence town, protected by a solid fortress at t he  ford on the left Elbe River bank. ',
+      description: 'Dresden Fortress, around  1170  Dresden is supposed to have been founded as a royal  residence town, protected by a solid fortress at t he  ford on the left Elbe River bank. ',
+      id: '4be90b1de1b39521d44921c1',
       icon: 'images/tree.png'
   },
   {
       name: 'Residenzschloss / Art gallery',
       latlong: {lat: 51.052498, lng: 13.736660},
-      address: 'Dresden Castle or Royal Palace is one of the oldest buildings in Dresden, Germany',
+      description: 'Dresden Castle or Royal Palace is one of the oldest buildings in Dresden, Germany',
+      id: '4bbf9971b492d13a86efa260',
       icon: 'images/palette.png'
   }
 ];
 
 //this function initializes the map
 function initMap() {
-
+    //here we set customised styles
     var styles = [
       {
         featureType: 'water',
@@ -78,64 +85,101 @@ function initMap() {
       styles: styles,
       mapTypeControl: false
     });
-    //The creates the info window
-    var infowindow = new google.maps.InfoWindow({
-    });
+    //This creates the info window
+    var infowindow = new google.maps.InfoWindow({});
+
     //This creates the lat long boundries
     var bounds = new google.maps.LatLngBounds();
-    //This for loop is used to create new marker properties and push them into each object in the locationInfo array, making them properties of all of the location objects
-    for( i = 0; i<locationInfo.length; i++){
-      //Creates each marker as a property of an object in the locationInfo array
+
+    // The following group uses the location array to create an array of markers on initialize.
+    // This creates the markers on the map
+    for(var i = 0; i < locationInfo.length; i++){
+
+     // Create a marker per location, and put into markers array.
       locationInfo[i].marker = new google.maps.Marker({
       position: locationInfo[i].latlong,
       map: map,
       title: locationInfo[i].name,
-      address: locationInfo[i].address,
+      description: locationInfo[i].description,
+      id: locationInfo[i].id,
       icon: locationInfo[i].icon,
       animation: google.maps.Animation.DROP
     });
-    //This adds a click event to the marker properties that causes the infoWindow to open upon clicking. It doesn't contain the content yet though.
-    locationInfo[i].marker.addListener('click', function(){
-      //Now we are calling the populateInfoWindow function that we set up later
+
+    // Create an onclick event to open an infowindow at each marker.
+    locationInfo[i].marker.addListener('click', function() {
+      //this opens infoWindow
       populateInfoWindow(this, infowindow);
-    });
-    //This adds the click event that calls the function in control of the animation of the marker
-    locationInfo[i].marker.addListener('click', function(){
+      //this bounces the marker when its clicked
       toggleBounce(this);
     });
+
+    //from Udacity - bounds.extend(markers[i].position);
     bounds.extend(locationInfo[i].marker.position);
     }
-    // Extend the boundaries of the map for each marker
+    // fitBounds() method adjusts the map's viewport in order to view the passed LatLngBounds in full at the centre of the map.
     map.fitBounds(bounds);
-    //center the map to the geometric center of all markers.
+    //set center of the markers
     map.setCenter(bounds.getCenter());
 }
 
-//This function makes sure that the infowindow appears and sets the content to the correct information, it also clears the window content if the info window is closed
-function populateInfoWindow(marker, infowindow) {
-  // This just makes sure the window is not already open
-  if (infowindow.marker != marker) {
-    infowindow.marker = marker;
-    //This sets the content ofthe info window
-    infowindow.setContent('<h3>' + marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.address + '</div>' + '<div>' + marker.phone + '</div>' + '<img id ="logo" src = "yelpLogo.jpg">');
-    infowindow.open(map, marker);
-    // Make sure the infoWindow is cleared if the close button is clicked
-    infowindow.addListener('closeclick', function() {
-      infowindow.marker = null;
-      //Makes sure the animation of the marker is stopped if the infoWindow close button is clicked
-      marker.setAnimation(null);
-    });
-  }
-}
 
 function toggleBounce(myMarker) {
     myMarker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
         myMarker.setAnimation(null);
-    }, 2500);
+    }, 2000);
+}
+
+// This function populates the infowindow when the marker is clicked. We'll only allow
+// one infowindow which will open at the marker that is clicked, and populate based
+// on that markers position.
+  function populateInfoWindow(marker, infowindow) {
+      // Check to make sure the infowindow is not already opened on this marker.
+  if (infowindow.marker != marker) {
+    infowindow.marker = marker;
+    //This sets the content of the info window
+    infowindow.setContent('<h3>' + locationInfo[i].marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + marker.id + '</div>');
+    infowindow.open(map, marker);
+    // Make sure the marker property is cleared if the infowindow is closed.
+    infowindow.addListener('closeclick', function() {
+      infowindow.marker = null;
+      //Stop the marker animation if the infoWindow close button is clicked
+      marker.setAnimation(null);
+    });
+  }
+
+        /*
+        Foursquare API
+        */
+        var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.id + "/photos?&client_id=XGWXHTVIZCIVDOHSWSGV4MDCK1UMEVXVFEJCESF0NVIQGOCL&client_secret=KWH3M5ILDBPXCE4WRE2URV0UY1JX1D2AHRHGED2MKMY0S4Q2&v=20170705&m=foursquare";
+        var foursquareRequestTimeout = setTimeout(function() {
+          alert("Failed to load Foursquare photo.");
+        }, 2000);
+
+          $.ajax({
+              url: foursquareUrl,
+              dataType: "jsonp",
+
+              success: function(response) {
+                  console.log(response);
+                  var photo_data = response.response.photos.items[0] || response.photos.items[0];
+                  var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
+                  var photo = ('<img class="venueimg" src="' + photoUrl + '">');
+                  console.log(response.response);
+
+                  // You are setting the info window's content and open the info window after the ajax request returns.
+                  infowindow.setContent('<h3>' + marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + photo + '</div>');
+                  infowindow.open(map, marker);
+
+                  clearTimeout(foursquareRequestTimeout);
+                }
+
+              });
 }
 
 
+// Let the user know if something went wrong
 function googleError() {
     alert('Google Maps Error');
 }
