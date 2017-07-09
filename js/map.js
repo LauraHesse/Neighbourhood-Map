@@ -81,7 +81,7 @@ function initMap() {
     ];
     // This constructor creates the new map at the chosen location
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
+
       styles: styles,
       mapTypeControl: false
     });
@@ -139,8 +139,8 @@ function toggleBounce(myMarker) {
   if (infowindow.marker != marker) {
     infowindow.marker = marker;
     //This sets the content of the info window
-    infowindow.setContent('<h3>' + locationInfo[i].marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + marker.id + '</div>');
-    infowindow.open(map, marker);
+    //infowindow.setContent('<h3>' + marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + marker.id + '</div>');
+    //infowindow.open(map, marker);
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.marker = null;
@@ -149,35 +149,41 @@ function toggleBounce(myMarker) {
     });
   }
 
-        /*
-        Foursquare API
-        */
-        var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.id + "/photos?&client_id=XGWXHTVIZCIVDOHSWSGV4MDCK1UMEVXVFEJCESF0NVIQGOCL&client_secret=KWH3M5ILDBPXCE4WRE2URV0UY1JX1D2AHRHGED2MKMY0S4Q2&v=20170705&m=foursquare";
-        var foursquareRequestTimeout = setTimeout(function() {
-          alert("Failed to load Foursquare photo.");
-        }, 2000);
+  /*
+  Foursquare API
+  */
+  var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.id + "/photos?&client_id=XGWXHTVIZCIVDOHSWSGV4MDCK1UMEVXVFEJCESF0NVIQGOCL&client_secret=KWH3M5ILDBPXCE4WRE2URV0UY1JX1D2AHRHGED2MKMY0S4Q2&v=20170705&m=foursquare";
+  var foursquareRequestTimeout = setTimeout(function() {
+    alert("Failed to load Foursquare photo.");
+  }, 2000);
 
-          $.ajax({
-              url: foursquareUrl,
-              dataType: "jsonp",
+    $.ajax({
+        url: foursquareUrl,
+        dataType: "jsonp",
 
-              success: function(response) {
-                  console.log(response);
-                  var photo_data = response.response.photos.items[0] || response.photos.items[0];
-                  var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
-                  var photo = ('<img class="venueimg" src="' + photoUrl + '">');
-                  console.log(response.response);
+        success: function(response) {
+            console.log(response);
+            var photo_data = response.response.photos.items[0] || response.photos.items[0];
+            var photoUrl = photo_data.prefix + '200' + 'x' + '200' + photo_data.suffix;
+            var photo = ('<img class="venueimg" src="' + photoUrl + '">');
+            console.log(response.response);
 
-                  // You are setting the info window's content and open the info window after the ajax request returns.
-                  infowindow.setContent('<h3>' + marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + photo + '</div>');
-                  infowindow.open(map, marker);
+            // You are setting the info window's content and open the info window after the ajax request returns.
+            infowindow.setContent('<h3>' + marker.title + '</h3>' + '<div>' + photo + '</div>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' );
+            infowindow.open(map, marker);
 
-                  clearTimeout(foursquareRequestTimeout);
-                }
+            clearTimeout(foursquareRequestTimeout);
+          }
 
-              });
+        });
 }
 
+// open mobile menu
+$('#menu').click(function(e){
+    e.preventDefault();
+    $('.side-nav').animate({width:'toggle'},350);
+
+});
 
 // Let the user know if something went wrong
 function googleError() {
