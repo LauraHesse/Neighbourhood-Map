@@ -8,17 +8,19 @@
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700" rel="stylesheet">
     </head>
     <body>
+
+        <a id="menu">
+            <img src="images/if_menu-alt_134216.svg">
+        </a>
         <div class="container">
           <div class="side-nav">
               <div class="header">
                   <h1>Dresden</h1>
-                  <ul id="rudr_instafeed"></ul>
               </div>
               <div class="content">
                    <div class="search">
                       <input type="text" placeholder="Search Park/Cafe/Playground.." data-bind="value: query, valueUpdate: 'afterkeydown'" >
                   </div>
-
                   <ol class="locations" data-bind="foreach: searchResults">
                     <li>
                         <a href="" data-bind="text: name, click: $parent.listClicker"></a>
@@ -30,6 +32,7 @@
         </div>
 
         <script src="js/lib/knockout-3.4.2.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="js/map.js"></script>
         <script src="js/script.js"></script>
         <!--Load the JS API ASYNCHRONOUSLY below.-->
