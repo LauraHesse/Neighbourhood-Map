@@ -15,11 +15,10 @@ var ViewModel = function(){
   });
 
   //this triggers all of the click events on the marker and closes the sidebar
+
   self.listClicker = function(position){
     google.maps.event.trigger(position.marker, 'click');
-    $('.side-nav').addClass('active').animate({width:'toggle'},350);
   };
-
 };
 
 ko.applyBindings(new ViewModel());

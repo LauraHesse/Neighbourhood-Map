@@ -80,9 +80,8 @@ function initMap() {
     ];
     // This constructor creates the new map at the chosen location
     map = new google.maps.Map(document.getElementById('map'), {
-
-      styles: styles,
-      mapTypeControl: false
+      disableDefaultUI: true,
+      styles: styles
     });
     //This creates the info window
     var infowindow = new google.maps.InfoWindow({});
@@ -94,7 +93,7 @@ function initMap() {
     // This creates the markers on the map
     //https://discussions.udacity.com/t/help-with-for-and-or-foreach-loop/188174/2?u=sarah_m
 
-    locationInfo.forEach(function(mark) {
+    locationInfo.forEach(function(mark, index) {
         // Get the position from the location array.
         var position = mark.latlong;
         var title = mark.name;
@@ -114,6 +113,9 @@ function initMap() {
             map: map,
             animation: google.maps.Animation.DROP
         });
+
+        // Push the marker to our array of markers.
+        locationInfo[index].marker = marker;
 
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
@@ -190,7 +192,6 @@ $('#menu').click(function(e){
     e.preventDefault();
     $('.side-nav').animate({width:'toggle'},350);
     $('#map').toggleClass('active');
-
 });
 
 // Let the user know if something went wrong
