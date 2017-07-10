@@ -4,10 +4,20 @@ Header Photo - Seperoper Poster http://bit.ly/2qPCAzH */
 html,
 body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    margin: 0;
+   font-weight: 300;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#menu {
+    position: absolute;
+    left: 5px;
+    z-index: 3;
+    cursor: pointer;
     padding: 0;
 }
+
 
 h3 {
     font-size: 22px;
@@ -21,15 +31,20 @@ h3 {
     float: right;
 }
 
+.container {
+  height: 100%;
+  position: relative;
+  background: #8cb30c;
+}
+
+
+
 .side-nav {
-    /* background: #e19295; */
+    background: #e19295;
     line-height: 35px;
     text-align: left;
-    /* width: 340px; */
-    height: inherit;
-    position: absolute;
-    z-index: 2;
-    box-shadow: #383737 1px 0 10px;
+    width: 340px;
+    padding-bottom: 60px;
 }
 
 .header {
@@ -53,18 +68,22 @@ input {
     width: 93%;
 }
 
+input[type="search"] {
+    width: 70%;
+}
+
+
 .content {
     height: 100%;
-    background: #e19295;
 }
 
 h1 {
-    color: #fff;
-    margin: 100px 0;
-    text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 3.3em;
-    text-shadow: #383737 1px 0 10px;
+  color: #fff;
+  margin: 100px 0;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.3em;
+  text-shadow: #383737 1px 0 10px;
 }
 
 ol.locations {
@@ -79,10 +98,9 @@ ol.locations {
 ol.locations > li{
     position: relative;
     margin-bottom: 20px;
-    /* padding-left: 0.5em; */
     min-height: 3em;
     border-left: 2px solid #fff;
-    /* padding-right: 20px; */
+    padding-right: 20px;
     line-height: 20px;
 }
 ol.locations > li:before {
@@ -110,30 +128,25 @@ a {
     text-decoration: none;
     color: #000;
     position: relative;
-    top: 15px;
-    padding: 20px;
+    top: 14px;
+    padding: 18px;
 }
 
 
 #map {
-    top: 0;
-    height: 140%;
-    left: 0;
-    position: absolute;
-    right: 0px;
-    z-index: 1;
-    height: 100%;
+  bottom:0px;
+  height: 100%;
+  left: 344px;
+  position: absolute;
+  right: 0px;
+  transition: all .3s ease-in-out;
 }
 
-img.venueimg {
+#map.active {
+    left: 0;
+}
+
+.venueimg {
     float: right;
     padding-left: 20px;
-}
-
-#menu {
-    position: absolute;
-    left: 5px;
-    z-index: 3;
-    cursor: pointer;
-    padding: 0;
 }
