@@ -1,5 +1,5 @@
 # Neighbourhood-Map
-![alt tag](https://github.com/arualh/frontend-nanodegree-resume/blob/master/images/ArualFullScreen.png)
+![alt tag](https://raw.githubusercontent.com/LauraHesse/Neighbourhood-Map/master/Screen%20Shot%202017-07-10%20at%2008.53.30.png)
 
 # Project Details
 ## How do I complete this project?
