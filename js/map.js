@@ -7,7 +7,7 @@ var locationInfo = [
       name: 'Frauenkirche / Church',
       latlong: {lat: 51.051873, lng: 13.741522},
       description: 'The Frauenkirche Dresden looks back on a history of over 1000 years. It ist a history full of changes, of great splendour and utter destruction. The first Frauenkirche was built in the 11th century as small Romanic missionary church.',
-    // id is foursquare.com location id
+      // id is foursquare.com location id
       id: '4b5c47a9f964a520782929e3',
       icon: 'images/bell.png'
   },
@@ -114,7 +114,7 @@ function initMap() {
       toggleBounce(this);
     });
 
-    //from Udacity - bounds.extend(markers[i].position);
+    //from Udacity Map example - bounds.extend(markers[i].position);
     bounds.extend(locationInfo[i].marker.position);
     }
     // fitBounds() method adjusts the map's viewport in order to view the passed LatLngBounds in full at the centre of the map.
@@ -123,7 +123,7 @@ function initMap() {
     map.setCenter(bounds.getCenter());
 }
 
-
+// this animates marker icon
 function toggleBounce(myMarker) {
     myMarker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
@@ -131,26 +131,22 @@ function toggleBounce(myMarker) {
     }, 2000);
 }
 
-// This function populates the infowindow when the marker is clicked. We'll only allow
-// one infowindow which will open at the marker that is clicked, and populate based
-// on that markers position.
+// this function opens the infowindow when the marker is clicked
   function populateInfoWindow(marker, infowindow) {
-      // Check to make sure the infowindow is not already opened on this marker.
+      // this checks if the infowindow is not already opened
   if (infowindow.marker != marker) {
     infowindow.marker = marker;
-    //This sets the content of the info window
-    //infowindow.setContent('<h3>' + marker.title + '</h3>' + '<h4>History</h4>' + '<div>' + marker.description + '</div>' + '<div>' + marker.id + '</div>');
-    //infowindow.open(map, marker);
-    // Make sure the marker property is cleared if the infowindow is closed.
+    // make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.marker = null;
-      //Stop the marker animation if the infoWindow close button is clicked
+      //this stops the marker animation if the infoWindow close button is clicked
       marker.setAnimation(null);
     });
   }
 
   /*
   Foursquare API
+  code help taken from here https://discussions.udacity.com/t/cant-get-foursquare-api-to-work/259270/34
   */
   var foursquareUrl = "https://api.foursquare.com/v2/venues/" + marker.id + "/photos?&client_id=XGWXHTVIZCIVDOHSWSGV4MDCK1UMEVXVFEJCESF0NVIQGOCL&client_secret=KWH3M5ILDBPXCE4WRE2URV0UY1JX1D2AHRHGED2MKMY0S4Q2&v=20170705&m=foursquare";
   var foursquareRequestTimeout = setTimeout(function() {
@@ -187,5 +183,5 @@ $('#menu').click(function(e){
 
 // Let the user know if something went wrong
 function googleError() {
-    alert('Google Maps Error');
+    alert('Oh NO!, There is a Google Maps Error');
 }
