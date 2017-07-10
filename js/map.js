@@ -189,7 +189,7 @@ function toggleBounce(myMarker) {
 $('#menu').click(function(e){
     e.preventDefault();
     $('.side-nav').animate({width:'toggle'},350);
-
+    $('#map').toggleClass('active');
 });
 
 // Let the user know if something went wrong
