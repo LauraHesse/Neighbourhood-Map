@@ -8,16 +8,16 @@ var ViewModel = function(){
   //this code is taken from Udacity forum
   self.searchResults = ko.computed(function() {
       var q = self.query();
-      //this filters the location entries 
+      //this filters the location entries
       return locationInfo.filter(function(i) {
         return i.name.toLowerCase().indexOf(q) >= 0;
       });
   });
 
   //this triggers all of the click events on the marker and closes the sidebar
-  self.listClicker = function(locationInfo){
-    google.maps.event.trigger(locationInfo.marker, 'click');
-    $('.side-nav').animate({width:'toggle'},350);
+  self.listClicker = function(position){
+    google.maps.event.trigger(position.marker, 'click');
+    $('.side-nav').addClass('active').animate({width:'toggle'},350);
   };
 
 };

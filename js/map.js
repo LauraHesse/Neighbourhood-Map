@@ -1,6 +1,5 @@
 var map;
 
-
 //locationInfo is an array of objects that holds the info
 var locationInfo = [
   {
@@ -26,7 +25,7 @@ var locationInfo = [
       icon: 'images/tenor.png'
   },
   {
-      name: 'Gemäldegalerie Alte Meister / Art gallery',
+      name: 'Gemäldegalerie / Art gallery',
       latlong: {lat: 51.053388, lng: 13.734707},
       description: '(Old Masters Picture Gallery) With master works including Raphael’s "Sistine Madonna", Giorgione’s "Sleeping Venus", Correggio’s "Holy Night", Cranach’s "St. Catherine Altar", Vermeer’s "Girl Reading a Letter at an Open Window" and Bellotto’s views of Dresden, the Gemäldegalerie Alte Meister enjoys a reputation that is international in scope. ',
       id: '4b462b27f964a520d41826e3',
@@ -93,30 +92,42 @@ function initMap() {
 
     // The following group uses the location array to create an array of markers on initialize.
     // This creates the markers on the map
-    for(var i = 0; i < locationInfo.length; i++){
+    //https://discussions.udacity.com/t/help-with-for-and-or-foreach-loop/188174/2?u=sarah_m
 
-     // Create a marker per location, and put into markers array.
-      locationInfo[i].marker = new google.maps.Marker({
-      position: locationInfo[i].latlong,
-      map: map,
-      title: locationInfo[i].name,
-      description: locationInfo[i].description,
-      id: locationInfo[i].id,
-      icon: locationInfo[i].icon,
-      animation: google.maps.Animation.DROP
+    locationInfo.forEach(function(mark) {
+        // Get the position from the location array.
+        var position = mark.latlong;
+        var title = mark.name;
+        var description = mark.description;
+        var id = mark.id;
+        var icon = mark.icon;
+
+        console.log(position, title, description, id, icon);
+
+        // Create a marker per location, and put into markers array.
+        var marker = new google.maps.Marker({
+            position: position,
+            title: title,
+            description: description,
+            id: id,
+            icon: icon,
+            map: map,
+            animation: google.maps.Animation.DROP
+        });
+
+        // Create an onclick event to open an infowindow at each marker.
+        marker.addListener('click', function() {
+          //this opens infoWindow
+          populateInfoWindow(this, infowindow);
+          //this bounces the marker when its clicked
+          toggleBounce(this);
+        });
+
+        //from Udacity Map example - bounds.extend(markers[i].position);
+        bounds.extend(marker.position);
     });
 
-    // Create an onclick event to open an infowindow at each marker.
-    locationInfo[i].marker.addListener('click', function() {
-      //this opens infoWindow
-      populateInfoWindow(this, infowindow);
-      //this bounces the marker when its clicked
-      toggleBounce(this);
-    });
 
-    //from Udacity Map example - bounds.extend(markers[i].position);
-    bounds.extend(locationInfo[i].marker.position);
-    }
     // fitBounds() method adjusts the map's viewport in order to view the passed LatLngBounds in full at the centre of the map.
     map.fitBounds(bounds);
     //set center of the markers
@@ -178,6 +189,7 @@ function toggleBounce(myMarker) {
 $('#menu').click(function(e){
     e.preventDefault();
     $('.side-nav').animate({width:'toggle'},350);
+    $('#map').toggleClass('active');
 
 });
 
