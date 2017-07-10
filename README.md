@@ -1,5 +1,5 @@
 # Neighbourhood-Map
-![alt tag](https://raw.githubusercontent.com/LauraHesse/Neighbourhood-Map/master/Screen%20Shot%202017-07-10%20at%2017.24.08.png)
+![alt tag](https://raw.githubusercontent.com/LauraHesse/Neighbourhood-Map/master/Screen%20Shot%202017-07-10%20at%2017.27.07.png)
 
 # Project Details
 Here you'll find my take in using Knockout JS and Google Maps for Udacity Neighbourhood-Map exercise.
