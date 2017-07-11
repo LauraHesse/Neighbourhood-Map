@@ -31,12 +31,18 @@
           <div id="map"></div>
         </div>
 
+        <script>
+             var googleError = function(){
+                 alert('Sincere apologies, something went wrong with Google Maps. Try refreshing the page.');
+             };
+       </script>
+
         <script src="js/lib/knockout-3.4.2.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="js/map.js"></script>
         <script src="js/script.js"></script>
         <!--Load the JS API ASYNCHRONOUSLY below.-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoeth7Fqpz2HH124UjZkfxLSS19YhOT5Y&callback=initMap"
-        async defer></script>
+        async defer onerror="googleError()"></script>
   </body>
 </html>
